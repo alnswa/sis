@@ -8,8 +8,8 @@
 </head>
 <body>
 	
-		<h3> New Student is added successfully </h3>	
-		<a href="homepage">Home</a>
+		<h3> New Student is added successfully.... </h3>	
+		<a href="homepage">Home Page</a>
 		
 </body>
 </html>
