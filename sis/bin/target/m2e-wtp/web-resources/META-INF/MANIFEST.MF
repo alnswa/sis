@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: sis
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: IRP
+Implementation-Vendor-Id: com.spaneos
+Build-Jdk: 1.8.0_40
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+Main-Class: com.spaneos.sis.SisApplication
+
