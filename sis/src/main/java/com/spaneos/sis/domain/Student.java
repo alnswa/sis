@@ -5,10 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
 @Table(name="student")
+@Component
 public class Student {
 	@Id
+	private String id;
+	
 	@Column(name="STUDENTID")
 	private int studentId;
 
@@ -139,6 +144,14 @@ public class Student {
 				+ ", qualification=" + qualification + ", college=" + college
 				+ ", percentage=" + percentage + ", branch=" + branch
 				+ ", city=" + city + ", state=" + state + "]";
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

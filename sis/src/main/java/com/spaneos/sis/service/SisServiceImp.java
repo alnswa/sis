@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spaneos.sis.config.SisMongoRepository;
 import com.spaneos.sis.dao.SisDao;
 import com.spaneos.sis.domain.Student;
 
@@ -13,6 +14,9 @@ import com.spaneos.sis.domain.Student;
 public class SisServiceImp implements SisService {
 	@Autowired
 	private SisDao sisDao;
+	@Autowired
+	private SisMongoRepository repository;
+	
 
 	@Override
 	public boolean addStudent(Student student) {
@@ -29,6 +33,14 @@ public class SisServiceImp implements SisService {
 			return studentList;
 		else
 			throw new IllegalArgumentException();
+	}
+
+	public SisMongoRepository getRepository() {
+		return repository;
+	}
+
+	public void setRepository(SisMongoRepository repository) {
+		this.repository = repository;
 	}
 
 }

@@ -10,11 +10,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.mongodb.MongoClient;
 
 @Configuration
 @ComponentScan("com.spaneos.sis")
@@ -25,8 +31,6 @@ public class SisConfiguration {
 	private @Value("${db.url:jdbc:mysql://localhost:3306/irp}") String url;
 	private @Value("${db.username:root}") String userName;
 	private @Value("${db.password:spaneos}") String password;
-	
-	
 
 	@Bean(name = "viewResolver")
 	public InternalResourceViewResolver viewResolver() {
@@ -74,6 +78,24 @@ public class SisConfiguration {
 		properties.put("hibernate.show_sql", true);
 		properties.put("hibernate.hbm2dll.auto", "update");
 		return properties;
+	}
+
+	// Mongo Db Connection
+
+	public @Bean MongoDbFactory mongoDbFactory() throws Exception {
+		return new SimpleMongoDbFactory(new MongoClient(), "irp");
+	}
+
+	public @Bean MongoTemplate mongoTemplate() throws Exception {
+
+		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
+
+		return mongoTemplate;
+
+	}
+	@Bean
+	public PersistenceExceptionTranslationPostProcessor processor(){
+		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
 }
