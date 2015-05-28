@@ -1,5 +1,7 @@
 package com.spaneos.sis.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -9,6 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
@@ -20,6 +25,8 @@ public class SisConfiguration {
 	private @Value("${db.url:jdbc:mysql://localhost:3306/irp}") String url;
 	private @Value("${db.username:root}") String userName;
 	private @Value("${db.password:spaneos}") String password;
+	
+	
 
 	@Bean(name = "viewResolver")
 	public InternalResourceViewResolver viewResolver() {
@@ -34,6 +41,7 @@ public class SisConfiguration {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
 		return jdbcTemplate;
 	}
+
 	@Bean
 	public DataSource getDataSource() {
 		BasicDataSource obj = new BasicDataSource();
@@ -43,6 +51,29 @@ public class SisConfiguration {
 		obj.setPassword(password);
 
 		return obj;
+	}
+
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new HibernateTransactionManager(sessionfactory().getObject());
+	}
+
+	@Bean
+	public LocalSessionFactoryBean sessionfactory() {
+		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+		sessionFactoryBean.setDataSource(getDataSource());
+		sessionFactoryBean.setPackagesToScan("com.spaneos.sis.domain");
+		sessionFactoryBean.setHibernateProperties(hibernateProperties());
+		return sessionFactoryBean;
+	}
+
+	private Properties hibernateProperties() {
+		Properties properties = new Properties();
+		properties.put("hibernate.dialect",
+				org.hibernate.dialect.Oracle10gDialect.class.getName());
+		properties.put("hibernate.show_sql", true);
+		properties.put("hibernate.hbm2dll.auto", "update");
+		return properties;
 	}
 
 }

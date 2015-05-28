@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,8 @@ public class SisJdbcDaoImp implements SisDao {
 
 	@Override
 	public boolean save(Student student) {
-		// TODO Auto-generated method stub
+		jdbcTempalte.update("insert into student values(?,?,?,?,?,?,?,?,?,?)",
+				new Object[] {student.getStudentId()});
 		return false;
 	}
 

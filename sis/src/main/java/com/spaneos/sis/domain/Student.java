@@ -1,16 +1,36 @@
 package com.spaneos.sis.domain;
 
-public class Student {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="student")
+public class Student {
+	@Id
+	@Column(name="STUDENTID")
 	private int studentId;
+
+	@Column(name="FULLNAME")
 	private String fullName;
+	
+	@Column(name="BATCH")
 	private String batchNo;
+	
+	@Column(name="EMAIL")
 	private String email;
+	@Column(name="QUALIFICATION")
 	private String qualification;
+	@Column(name="COLLEGE")
 	private String college;
+	@Column(name="PERCENTAGE")
 	private double percentage;
+	@Column(name="BRANCH")
 	private String branch;
+	@Column(name="CITY")
 	private String city;
+	@Column(name="STATE")
 	private String state;
 
 	public Student() {
